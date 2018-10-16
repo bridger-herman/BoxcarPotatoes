@@ -30,7 +30,6 @@ sys.path.append(".")
 
 import mesh_helpers
 importlib.reload(mesh_helpers)
-from mesh_helpers import make_tag
 
 # Get the spherical coordinates of an (x, y, z) coordinate
 def _to_spherical(co):

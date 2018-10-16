@@ -36,6 +36,8 @@ from glyph import *
 import blender_utils
 importlib.reload(blender_utils)
 
+from blender_utils import *
+
 class CubeGenerator(GlyphGenerator):
     '''Generic box-shaped glyphs'''
     def _create_cube(self, location, value, normal = (0, 0, 0)):
