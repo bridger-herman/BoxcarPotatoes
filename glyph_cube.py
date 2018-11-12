@@ -90,7 +90,9 @@ class LengthCubeGenerator(CubeGenerator):
     def within_fn(self, existing_point, new_point, current_polygon_vertices):
         fn_args = list(new_point) + list([current_polygon_vertices])
         value = self.value_fn(*fn_args)
-        return blender_utils.within_cube(existing_point, new_point, 5)
+        #  recip_value = 1 / value
+        return blender_utils.within_box(existing_point, new_point, (3.0, 3.0 *
+            value, 3.0))
 
 class LengthCubeGenerator2(CubeGenerator):
     '''Glyphs following the perpendicular gradient'''

@@ -21,6 +21,8 @@
 import sys
 import importlib
 
+import bpy
+
 # Other imports
 # importlib is necessary because Blender caches copies of the scripts
 sys.path.append(".")
@@ -40,6 +42,16 @@ import mesh_helpers
 importlib.reload(mesh_helpers)
 from mesh_helpers import *
 
+class MockPotato:
+    def __init__(self):
+        self.blend_obj = bpy.context.active_object
+
+    @property
+    def bound_box(self):
+        bbox = self.blend_obj.bound_box
+        coords = [v[:] for v in bbox]
+        return Vector(coords[0]), Vector(coords[6])
+
 def main():
     # Define the glyph sizes
     # Based on viewing angle at 25cm, from Li et al. 2010
@@ -48,8 +60,9 @@ def main():
     length_range = (1, 3.5)
     length_range2 = (1, 3.5)
 
-    p = Potato()
-    p.generate()
+    p = MockPotato()
+    #  p = Potato()
+    #  p.generate()
 
     minm, maxm = p.bound_box
 
@@ -78,16 +91,16 @@ def main():
     points = g.distribute_poisson()
 
     # Take the difference of the boxcars and the potato
-    boolean_op(g.blend_obj, p.blend_obj, 'DIFFERENCE')
+    #  boolean_op(g.blend_obj, p.blend_obj, 'DIFFERENCE')
 
     # Do some magic to prevent Python from modifying the bounding box while
     # slicing the potato in half
-    coords = p.bound_box
-    bbox = tuple(coords[:])
+    #  coords = p.bound_box
+    #  bbox = tuple(coords[:])
 
     # Non-destructively slice both the potato and the glyphs in half
-    slice_obj(p.blend_obj, True, op='INTERSECT', bound_box=bbox)
-    slice_obj(g.blend_obj, True, op='DIFFERENCE', bound_box=bbox)
+    #  slice_obj(p.blend_obj, True, op='INTERSECT', bound_box=bbox)
+    #  slice_obj(g.blend_obj, True, op='DIFFERENCE', bound_box=bbox)
 
 if __name__ == '__main__':
     main()
