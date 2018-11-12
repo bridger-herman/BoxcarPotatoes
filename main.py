@@ -20,6 +20,7 @@
 
 import sys
 import importlib
+from functools import partial
 
 import bpy
 
@@ -71,7 +72,8 @@ def main():
     minm, maxm = p.bound_box
 
     # Use a simple scalar field to plot:
-    f = lambda x, y, z: x
+    #  f = lambda x, y, z: x
+    f = partial(weight_closest, p.blend_obj)
     bundle = [(minm.x, maxm.x), (minm.y, maxm.y), (minm.z, maxm.z), f]
 
     # 8 bins (from Li et al.)

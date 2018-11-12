@@ -24,6 +24,15 @@ from mathutils import Vector, Matrix
 
 sys.path.append('.')
 
+# Finds the weight of the closest vertex to (x, y, z)
+# Returns the weight
+def weight_closest(obj, x, y, z):
+    (closest_index, _) = nearest_vertex(obj.data.vertices, Vector((x, y, z)))
+    try:
+        return obj.vertex_groups.active.weight(closest_index)
+    except RuntimeError:
+        return 0.1
+
 # Converts a quad into two triangles
 def to_tri(points):
     return [[points[0], points[1], points[3]], [points[1], points[2], points[3]]]
