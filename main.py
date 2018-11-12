@@ -42,6 +42,10 @@ import mesh_helpers
 importlib.reload(mesh_helpers)
 from mesh_helpers import *
 
+import task_answers
+importlib.reload(task_answers)
+from task_answers import *
+
 class MockPotato:
     def __init__(self):
         self.blend_obj = bpy.context.active_object
@@ -89,6 +93,7 @@ def main():
 
     # Distribute the points on the potato. This might take a while
     points = g.distribute_poisson()
+    print('task 1:', task_1(points))
 
     # Take the difference of the boxcars and the potato
     #  boolean_op(g.blend_obj, p.blend_obj, 'DIFFERENCE')
