@@ -84,8 +84,7 @@ class LengthCubeGenerator(CubeGenerator):
         ob.name = GLYPH_NAME
         closest_vertex, _ = nearest_vertex(self.vertices, Vector(location))
         gradient = gradient_at_vertex_2(self.edges, self.vertices, closest_vertex)
-        blender_utils.rotate_obj_gradient(ob, gradient.normalized(),
-                normal.normalized())
+        blender_utils.rotate_obj_gradient(ob, normal.normalized(), gradient.normalized())
         ob.scale[1] = value
         bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
         ob.rotation_mode='AXIS_ANGLE'
