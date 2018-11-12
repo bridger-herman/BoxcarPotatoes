@@ -76,8 +76,8 @@ def main():
 
     # 8 bins (from Li et al.)
     # Length-based glyphs, pointing perpendicular to gradient
-    #  m = LinearMapper3D(*bundle, output_range=length_range, num_bins=8)
-    #  g = LengthCubeGenerator(p.blend_obj, m.map)
+    m = LinearMapper3D(*bundle, output_range=length_range, num_bins=8)
+    g = LengthCubeGenerator(p.blend_obj, m.map)
 
     # Length-based glyphs, pointing perpendicular to gradient
     #  m = LinearMapper3D(*bundle, output_range=length_range2, num_bins=8)
@@ -88,8 +88,8 @@ def main():
     #  g = HeightCubeGenerator(p.blend_obj, m.map)
 
     # Radius-based glyphs
-    m = LinearMapper3D(*bundle, output_range=radius_range, num_bins=8)
-    g = SizeCubeGenerator(p.blend_obj, m.map)
+    #  m = LinearMapper3D(*bundle, output_range=radius_range, num_bins=8)
+    #  g = SizeCubeGenerator(p.blend_obj, m.map)
 
     # Distribute the points on the potato. This might take a while
     points = g.distribute_poisson()

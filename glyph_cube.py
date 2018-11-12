@@ -84,15 +84,17 @@ class LengthCubeGenerator(CubeGenerator):
         ob.name = GLYPH_NAME
         closest_vertex, _ = nearest_vertex(self.vertices, Vector(location))
         gradient = gradient_at_vertex_2(self.edges, self.vertices, closest_vertex)
-        blender_utils.rotate_obj_gradient(ob, normal, gradient)
+        blender_utils.rotate_obj_gradient(ob, gradient.normalized(),
+                normal.normalized())
         ob.scale[1] = value
+        bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
+        ob.rotation_mode='AXIS_ANGLE'
+        ob.rotation_axis_angle = (1.570796327,) + tuple(normal)
 
     def within_fn(self, existing_point, new_point, current_polygon_vertices):
         fn_args = list(new_point) + list([current_polygon_vertices])
         value = self.value_fn(*fn_args)
-        #  recip_value = 1 / value
-        return blender_utils.within_box(existing_point, new_point, (3.0, 3.0 *
-            value, 3.0))
+        return blender_utils.within_box(existing_point, new_point, (5.0, 2.5 * value, 5.0))
 
 class LengthCubeGenerator2(CubeGenerator):
     '''Glyphs following the perpendicular gradient'''
@@ -102,13 +104,14 @@ class LengthCubeGenerator2(CubeGenerator):
         ob.name = GLYPH_NAME
         closest_vertex, _ = nearest_vertex(self.vertices, Vector(location))
         gradient = gradient_at_vertex_2(self.edges, self.vertices, closest_vertex)
-        blender_utils.rotate_obj_gradient(ob, normal, gradient)
-        ob.scale[0] = value
+        blender_utils.rotate_obj_gradient(ob, gradient, normal)
+        ob.scale[1] = value
 
     def within_fn(self, existing_point, new_point, current_polygon_vertices):
         fn_args = list(new_point) + list([current_polygon_vertices])
         value = self.value_fn(*fn_args)
-        return blender_utils.within_cube(existing_point, new_point, 5)
+        return blender_utils.within_box(existing_point, new_point, (3.0, 3.0 *
+            value, 3.0))
 
 class SizeCubeGenerator(CubeGenerator):
     def within_fn(self, existing_point, new_point, current_polygon_vertices):
