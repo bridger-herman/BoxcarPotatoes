@@ -94,6 +94,7 @@ def main():
     # Distribute the points on the potato. This might take a while
     points = g.distribute_poisson()
     print('task 1:', task_1(points))
+    print('task 3:', task_3(p.blend_obj))
 
     # Take the difference of the boxcars and the potato
     #  boolean_op(g.blend_obj, p.blend_obj, 'DIFFERENCE')

@@ -35,4 +35,17 @@ def task_1(glyphs):
             max_glyph = glyphs[location]
             max_location = location
 
-    return max_location
+    return Vector(max_location)
+
+# mesh: the mesh to find the steepest slope (from a sphere) on
+# Returns the location of the steepest slope
+def task_3(obj):
+    min_dot_difference = 1.0
+    steepest = Vector((0.0, 0.0, 0.0))
+    for v in obj.data.vertices:
+        dot = v.co.normalized().dot(v.normal.normalized())
+        if dot < min_dot_difference:
+            min_dot_difference = dot
+            steepest = v.co
+    return steepest
+
